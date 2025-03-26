@@ -4,7 +4,6 @@ import 'dart:math';
 void main() {
   runApp(const MyApp());
 
-
 }
 
 class MyApp extends StatelessWidget {
@@ -44,6 +43,32 @@ class _MyHomePageState extends State<MyHomePage> {
   String _result3 = "";
  final  TextEditingController _nam = TextEditingController();
   String _result4 = "";
+
+  final TextEditingController _bigIntA = TextEditingController();
+  final TextEditingController _bigIntB =TextEditingController();
+  String _result5 = "" ;
+
+  void _soSieuLon()
+  {
+    BigInt? a = BigInt.tryParse(_bigIntA.text);
+    BigInt? b = BigInt.tryParse(_bigIntB.text);
+    if (a == null || b == null) {
+      setState(() {
+        _result5 = "Vui lòng nhập số hợp lệ!";
+      });
+      return;
+    }
+    setState(() {
+      _result5 = soSieuLon(a, b);
+    });
+  }
+  String soSieuLon(BigInt a, BigInt b) {
+    BigInt c = a + b;
+    BigInt d = a - b;
+    BigInt e = a * b;
+    BigInt f = a ~/ b  ;
+    return "Tổng: $c\nHiệu: $d\nTích: $e\nThương: $f";
+  }
   void _namNhuan () {
     int? nam = int.tryParse(_nam.text);
     if (nam == null || nam <= 0) {
@@ -170,6 +195,12 @@ class _MyHomePageState extends State<MyHomePage> {
               _buildTextField(_nam, "Nhập năm "),
               _buildButton("Kiểm tra năm nhuận", _namNhuan),
               _buildResult(_result4),
+
+              _buildTitle("Số siêu lớn"),
+              _buildTextField(_bigIntA, "Nhập số a"),
+              _buildTextField(_bigIntB, "Nhập số b"),
+              _buildButton("Tính toán", _soSieuLon),
+              _buildResult(_result5),
             ],
           ),
         ),
